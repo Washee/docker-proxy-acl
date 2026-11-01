@@ -11,7 +11,9 @@ import "net"
 import "net/http"
 import "github.com/gorilla/mux"
 
-import "./proxy"
+import "github.com/Washee/docker-proxy-acl/files/proxy"
+
+import "strings"
 
 type stringSlice []string;
 
@@ -32,7 +34,8 @@ func main() {
 		filename = fs.String("filename", "/tmp/docker-proxy-acl/docker.sock", "Location of socket file");
 	)
 	fs.Var(&allowed, "a", "Allowed location pattern prefix");
-	fs.Parse(os.Args[1:])
+	args := append(strings.Fields(os.Getenv("OPTIONS")), os.Args[1:]...)
+	fs.Parse(args)
 
 	if len(allowed) < 1 {
 		fmt.Println("Need at least 1 argument for -a: [containers, networks, version, info, ping]");
