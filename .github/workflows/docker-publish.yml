@@ -99,11 +99,14 @@ jobs:
       - name: Get Docker image size
         if: github.ref == 'refs/heads/master'
         id: image-size
+        env:
+          IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         run: |
-          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          IMAGE=$(echo "$IMAGE" | tr '[:upper:]' '[:lower:]')
 
-          SIZE=$(docker image inspect \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+          docker pull "$IMAGE:latest"
+
+          SIZE=$(docker image inspect "$IMAGE:latest" \
             --format='{{.Size}}')
 
           SIZE_MB=$(awk "BEGIN {
