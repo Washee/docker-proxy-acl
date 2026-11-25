@@ -1,0 +1,17 @@
+#example compose.yaml
+services:
+  proxy:
+    image: ghcr.io/washee/docker-proxy-acl:latest
+    container_name: proxy
+    environment:
+      OPTIONS: -a containers -a version
+    volumes:
+      - /tmp/docker-proxy-acl:/tmp/docker-proxy-acl
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./.cache:/.cache
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: 0.1
+          memory: 20M
