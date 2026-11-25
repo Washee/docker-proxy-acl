@@ -19,4 +19,7 @@ Based on [titpetric/docker-proxy-acl](https://github.com/titpetric/docker-proxy-
 
 Based on [kmlucy/docker-proxy-acl](https://github.com/kmlucy/docker-proxy-acl)
 
-This image is based on scratch to significantly reduce image size and reduce vulnerabilities.
+## Features
+
+- This image is based on scratch to significantly reduce image size
+- Reducing vulnerabilities
