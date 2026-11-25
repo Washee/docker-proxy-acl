@@ -23,7 +23,7 @@ jobs:
 
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
       # This is used to complete the identity challenge
       # with sigstore/fulcio when running outside of PRs.
@@ -94,3 +94,50 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+              # Get Docker image size from GHCR
+              
+      - name: Get Docker image size
+        if: github.ref == 'refs/heads/master'
+        id: image-size
+        run: |
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+          SIZE=$(docker image inspect \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            --format='{{.Size}}')
+
+          SIZE_MB=$(awk "BEGIN {
+            printf \"%.1f MB\", $SIZE / 1024 / 1024
+          }")
+
+          echo "size=$SIZE_MB" >> "$GITHUB_OUTPUT"
+
+      # Generate Docker image size badge
+      - name: Generate Docker size badge
+        if: github.ref == 'refs/heads/master'
+        run: |
+          mkdir -p badges
+
+          cat > badges/image-size.json << EOF
+          {
+            "schemaVersion": 1,
+            "label": "docker image",
+            "message": "${{ steps.image-size.outputs.size }}",
+            "color": "blue"
+          }
+          EOF
+
+      # Commit updated badge
+      - name: Commit Docker size badge
+        if: github.ref == 'refs/heads/master'
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+          git add badges/image-size.json
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Update Docker image size badge [skip ci]"
+            git push
+          fi
+
