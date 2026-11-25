@@ -18,5 +18,5 @@ Based on [kmlucy/docker-proxy-acl](https://github.com/kmlucy/docker-proxy-acl)
 
 This image is based on scratch to significantly reduce image size and reduce vulnerabilities.
 
-![Trivy Scan](https://github.com/USER/REPO/actions/workflows/trivy.yml/badge.svg)
+![Trivy Scan]([https://github.com/USER/REPO/actions/workflows/trivy.yml/badge.svg](https://github.com/washee/docker-proxy-acl/actions/workflows/trivy.yml/badge.svg))
 [![Docker](https://github.com/Washee/docker-proxy-acl/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/Washee/docker-proxy-acl/actions/workflows/docker-publish.yml)
