@@ -1,5 +1,6 @@
 [![Docker](https://github.com/Washee/docker-proxy-acl/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/Washee/docker-proxy-acl/actions/workflows/docker-publish.yml)
 [![Docker Image Security Scan](https://github.com/Washee/docker-proxy-acl/actions/workflows/trivy.yml/badge.svg)](https://github.com/Washee/docker-proxy-acl/actions/workflows/trivy.yml)
+![Docker Image Size](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/washee/docker-proxy-acl/master/badges/image-size.json)
 # docker-proxy-acl
 
 To create:
